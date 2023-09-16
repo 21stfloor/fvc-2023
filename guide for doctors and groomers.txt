@@ -1,0 +1,56 @@
++++++++++++++++++++++++++++++++++++++++++++
+
+doctor -> groomer
+	docid       -> groomid
+	docemail    -> groomemail
+	docname     -> groomname
+	docpassword -> groompassword
+	doctel      -> groomtel
+	specialties -> specialties
+
++++++++++++++++++++++++++++++++++++++++++++
+
+appointment -> gappointment
+	appoid     -> gappoid
+	pid        -> pid
+	apponum    -> gapponum
+	scheduleid -> gscheduleid
+	appodate   -> gappodate
+
++++++++++++++++++++++++++++++++++++++++++++
+
+schedule -> gschedule
+	scheduleid   -> gscheduleid
+	docid        -> groomid
+	title        -> gtitle
+	scheduledate -> gscheduledate
+	scheduletime -> gscheduletime
+	nop          -> gnop
+
++++++++++++++++++++++++++++++++++++++++++++
+
+doctor -> staff
+	docid       -> staffid
+	docemail    -> staffemail
+	docname     -> staffname
+	docpassword -> staffpassword
+	doctel      -> stafftel
+	specialties -> specialties
+
++++++++++++++++++++++++++++++++++++++++++++
+
+staff-> inventory
+	staffid      -> invid
+	staffemail   -> invcode
+	staffname    -> invname
+	staffpassword-> invpassword
+	stafftel     -> invquantity
+	specialties  -> invcategory
+		     -> invdescription
+
+tel -> quantity
+tele -> quan
+email -> code
+specialties -> invcategory
+Choose specialties -> category:
+
