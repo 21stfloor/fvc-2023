@@ -10,18 +10,9 @@
         
     <title>FVC | Sign Up</title>
 	<link rel="icon" type="image/x-icon" href="img/icon.ico">
-    <style>
-	body{
-    background-image: url(img/bg01.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 100%;
-	}
-	
-	</style>
+    
 </head>
-<body>
+<body id="bodySignUp" style="background-image: url('img/bgdog.jpg') ;">
 <?php
 
 session_start();
@@ -129,7 +120,10 @@ if($_POST){
                     </form>
             </tr>
         </table>
-
+        <div class="back-button">
+            <a href="index.php" class="btn btn-primary btn-sm">Back to Home</a>
+        </div>
+        <br />
     </div>
 </center>
 </body>

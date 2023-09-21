@@ -2,6 +2,7 @@
 body{
     margin: 7%;
     background-color: #F6F7FA;
+    
 }
 
 
@@ -15,7 +16,6 @@ body{
     padding: 0;
     box-shadow: 0 3px 5px 0 rgba(240, 240, 240, 0.3);
     animation: transitionIn-Y-over 0.5s;
-
 }
 td{
     text-align: center;
@@ -58,4 +58,8 @@ td{
     /*margin-top: 15px;*/
     margin-bottom: 15px;
     width: 100%;
+}
+
+#bodyLogin{
+    background-color: red;
 }
