@@ -78,6 +78,13 @@
                         <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Veterinarians</p></a></div>
                     </td>
                 </tr>
+
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-doctor">
+                        <a href="../pet/petListPage.php" class="non-style-link-menu"><div><p class="menu-text">My Pets</p></a></div>
+                    </td>
+                </tr>
+
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-session">
                         <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">Clinic Schedule</p></div></a>

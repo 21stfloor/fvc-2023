@@ -1,0 +1,13 @@
+yung system po namin is working na pero need pa po kasi i-simplify kasi hindi raw user-friendly as per panelist on the client side, and dadagdagan pong functions
+
+- Selling (e-commerce, add to cart, checkout
+
+- Inventory of products
+
+- Automated SMS notif for booking appointments and for expired and critical inventory stocks
+
+—Provide booking history and detailed pet’s records to the client
+
+- Landing page for website (index.php)
+
+ayan po yung functions na idadagdag
