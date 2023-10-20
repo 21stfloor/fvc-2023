@@ -46,7 +46,7 @@
             animation: transitionIn-Y-bottom 0.5s;
         }
 </style>
-<?php include('../inc/header.php') ?>
+
 
 </head>
 

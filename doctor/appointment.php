@@ -226,8 +226,18 @@
                                 <th class="table-headin">
                                     
                                     Actions
+
+                                </th>
+
+                                <th class="table-headin">
+
+                                    Status
+
+                                </th>
                                     
-                                </tr>
+                            </tr>
+
+                                
                         </thead>
                         <tbody>
                         
@@ -283,6 +293,31 @@
                                         
                                         <td style="text-align:center;">
                                             '.$appodate.'
+                                        </td>
+
+                                        <td style="text-align:center;">
+                                            <select id="' . $appoid . '" class="status-select" name="status" aria-label="Default select example">';
+                                                $option1 = "";
+                                                $option2 = "";
+                                                $option3 = "";
+                                                $option4 = "";
+                                                $stmt = $database->query("SELECT status FROM appointment WHERE appoid='$appoid'");
+                                                $stmt = $stmt->fetch_assoc();
+                                                $status = $stmt['status'];
+                                                if ($status == 1) {
+                                                    $option1 = "selected ";
+                                                } else if ($status == 2) {
+                                                    $option2 = "selected ";
+                                                } else if ($status == 3) {
+                                                    $option3 = "selected ";
+                                                } else if ($status == 4) {
+                                                    $option4 = "selected ";
+                                                }
+                                                echo '<option ' . $option1 . ' value="1">Pending</option>
+                                                <option ' . $option2 . 'value="2">Ongoing</option>
+                                                <option ' . $option3 . 'value="3">Complete</option>
+                                                <option ' . $option4 . 'value="4">Rejected</option>
+                                            </select>
                                         </td>
 
                                         <td>
@@ -575,5 +610,7 @@
     ?>
     </div>
 
+
+    <?php include('../inc/scripts.php'); ?>
 </body>
 </html>

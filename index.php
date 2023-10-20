@@ -47,7 +47,7 @@
                     <h2>veterinary appointment system.</h2>
                     <td colspan="3">
                     <center>
-                    <a href="appointment.php" >
+                    <a href="login.php" >
                         <input type="button" value="Make Appointment" class="appointment-btn btn-primary btn">
                         </a>
                         </center>
