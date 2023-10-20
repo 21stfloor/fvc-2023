@@ -88,4 +88,10 @@ $lastSegment = end($segments);
                     </td>
                 </tr>
 
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-dashbord <?php if ($lastSegment == 'products.php'){echo 'menu-icon-session-active';}?>">
+                        <a href="products.php" class="non-style-link-menu <?php if ($lastSegment == 'products.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Products</p></a></div>
+                    </td>
+                </tr>
+
             </table>

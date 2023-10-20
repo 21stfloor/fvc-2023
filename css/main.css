@@ -386,6 +386,13 @@ input[type=search]:focus {
   background-image: url('../img/icons/home.svg');
 }
 
+.menu-icon-store{
+  background-image: url('../img/icons/store.svg');
+}
+
+.menu-icon-cart{
+  background-image: url('../img/icons/cart.svg');
+}
 
 
 .menu-icon-dashbord:hover,.menu-icon-dashbord-active{
