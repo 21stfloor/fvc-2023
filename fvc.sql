@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2023 at 02:45 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- Generation Time: Oct 21, 2023 at 07:42 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,16 +50,64 @@ CREATE TABLE `appointment` (
   `pid` int(10) DEFAULT NULL,
   `apponum` int(3) DEFAULT NULL,
   `scheduleid` int(10) DEFAULT NULL,
-  `appodate` date DEFAULT NULL
+  `appodate` date DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`) VALUES
-(12, 4, 1, 12, '2023-04-15'),
-(10, 3, 1, 12, '2023-04-15');
+INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`) VALUES
+(13, 4, 1, 13, '2023-10-19', 3),
+(10, 3, 1, 12, '2023-04-15', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breed`
+--
+
+CREATE TABLE `breed` (
+  `breedId` int(11) NOT NULL,
+  `speId` int(11) NOT NULL,
+  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `breed`
+--
+
+INSERT INTO `breed` (`breedId`, `speId`, `name`) VALUES
+(1, 1, 'husky'),
+(2, 1, 'jack russel terrier'),
+(3, 2, 'ginger'),
+(6, 1, 'shih tzu'),
+(9, 1, 'aspin'),
+(10, 2, 'orenj'),
+(11, 4, 'rhode island red'),
+(12, 4, 'jersey giant'),
+(13, 3, 'embden goose'),
+(14, 3, 'greylag goose'),
+(15, 2, 'puspin'),
+(16, 2, 'black');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` int(11) NOT NULL,
+  `customer` int(11) NOT NULL,
+  `product` float NOT NULL,
+  `quantity` float NOT NULL,
+  `price` float NOT NULL,
+  `discount` float NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `payment_method` varchar(24) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -186,19 +234,46 @@ CREATE TABLE `inventory` (
   `invquantity` varchar(255) DEFAULT NULL,
   `invcategory` varchar(255) DEFAULT NULL,
   `invdescription` varchar(255) DEFAULT NULL,
-  `invprice` varchar(255) DEFAULT NULL
+  `invprice` varchar(255) DEFAULT NULL,
+  `image` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`invid`, `invcode`, `invname`, `invpassword`, `invquantity`, `invcategory`, `invdescription`, `invprice`) VALUES
-(2, 'FVC0002', 'Immune Booster 10ML', '123', '85', '1', 'This is for Dogs.', NULL),
-(3, 'FVC0003', 'Immune Booster 20ML', '123', '122', '1', '', '500'),
-(4, 'FVC0004', 'Immune Booster 50ML', '123', '100', '1', 'This is for Dogs.', '500'),
-(6, 'FVC0001', 'Immune Booster 5ML', '123', '97', '1', 'This is for Dogs.', '123'),
-(7, 'FVC0005', 'Immune Booster 100ML', '123', '100', '1', 'This is for cats and dogs.', '1000');
+INSERT INTO `inventory` (`invid`, `invcode`, `invname`, `invpassword`, `invquantity`, `invcategory`, `invdescription`, `invprice`, `image`) VALUES
+(2, 'FVC0002', 'Immune Booster 10ML', '123', '85', '1', 'This is for Dogs.', NULL, ''),
+(3, 'FVC0003', 'Immune Booster 20ML', '123', '122', '1', '', '500', ''),
+(4, 'FVC0004', 'Immune Booster 50ML', '123', '100', '1', 'This is for Dogs.', '500', ''),
+(6, 'FVC0001', 'Immune Booster 5ML', '123', '97', '1', 'This is for Dogs.', '123', ''),
+(7, 'FVC0005', 'Immune Booster 100ML', 'admin', '100', '1', 'This is for cats and dogs.', '1000', '../uploads/products/7/379559966_152352734599750_4754679250034332635_n.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `customer` int(11) NOT NULL,
+  `product` float NOT NULL,
+  `quantity` float NOT NULL,
+  `price` float NOT NULL,
+  `discount` float NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(24) NOT NULL,
+  `payment_method` varchar(24) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer`, `product`, `quantity`, `price`, `discount`, `date`, `status`, `payment_method`) VALUES
+(1, 4, 4, 6, 3000, 0, '2023-10-21', 'Pending', ''),
+(2, 4, 7, 1, 1000, 0, '2023-10-21', 'Pending', 'Gcash');
 
 -- --------------------------------------------------------
 
@@ -222,7 +297,48 @@ CREATE TABLE `patient` (
 
 INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pdob`, `ptel`) VALUES
 (3, 'mojicalord111@gmail.com', 'Lord Roland', '123', 'Paranaque', '1999-07-10', '09567256130'),
-(4, 'charlottediane11@gmail.com', 'Charlotte Diane', '123', 'Paranaque', '2000-04-20', '09060734717');
+(4, 'charlottediane11@gmail.com', 'Charlotte Diane', '123', 'Paranaque', '2000-04-20', '09954261220');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pet`
+--
+
+CREATE TABLE `pet` (
+  `petId` int(11) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `birthday` date NOT NULL,
+  `speId` int(11) NOT NULL,
+  `breedId` int(11) NOT NULL,
+  `picturedir` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pet`
+--
+
+INSERT INTO `pet` (`petId`, `pid`, `name`, `birthday`, `speId`, `breedId`, `picturedir`) VALUES
+(3, 4, 'Doggo', '2023-10-11', 1, 1, '../uploads/owners/4/3/379559966_152352734599750_4754679250034332635_n.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `invid` int(11) NOT NULL,
+  `invcode` varchar(255) DEFAULT NULL,
+  `invname` varchar(255) DEFAULT NULL,
+  `invpassword` varchar(255) DEFAULT NULL,
+  `invquantity` varchar(255) DEFAULT NULL,
+  `invcategory` varchar(255) DEFAULT NULL,
+  `invdescription` varchar(255) DEFAULT NULL,
+  `invprice` varchar(255) DEFAULT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -244,7 +360,8 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`) VALUES
-(12, '6', '9:00 AM', '2023-04-16', '09:00:00', 1);
+(12, '6', '9:00 AM', '2023-04-16', '09:00:00', 1),
+(13, '6', '2', '2023-10-31', '20:49:00', 1);
 
 -- --------------------------------------------------------
 
@@ -269,6 +386,27 @@ INSERT INTO `specialties` (`id`, `sname`) VALUES
 (5, 'Hamsters'),
 (7, 'Grooming'),
 (6, 'Front Desk');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `species`
+--
+
+CREATE TABLE `species` (
+  `speId` int(11) NOT NULL,
+  `name` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `species`
+--
+
+INSERT INTO `species` (`speId`, `name`) VALUES
+(1, 'dog'),
+(2, 'cat'),
+(3, 'goose'),
+(4, 'chicken');
 
 -- --------------------------------------------------------
 
@@ -301,28 +439,29 @@ INSERT INTO `staff` (`staffid`, `staffemail`, `staffname`, `staffpassword`, `sta
 
 CREATE TABLE `webuser` (
   `email` varchar(255) NOT NULL,
-  `usertype` char(1) DEFAULT NULL
+  `usertype` char(1) DEFAULT NULL,
+  `code` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `webuser`
 --
 
-INSERT INTO `webuser` (`email`, `usertype`) VALUES
-('admin@fvc.com', 'a'),
-('monicageller@fvc.com', 'd'),
-('oca@fvc.com', 'g'),
-('phoebe@fvc.com', 'd'),
-('mojicalord111@gmail.com', 'p'),
-('rossgeller@fvc.com', 'd'),
-('rachellegreen@fvc.com', 'd'),
-('charlottediane11@gmail.com', 'p'),
-('clarisse@fvc.com', 's'),
-('troy@fvc.com', 'g'),
-('cey@fvc.com', 'g'),
-('kurt@fvc.com', 's'),
-('irene@fvc.com', 'g'),
-('123', 'i');
+INSERT INTO `webuser` (`email`, `usertype`, `code`) VALUES
+('admin@fvc.com', 'a', ''),
+('monicageller@fvc.com', 'd', ''),
+('oca@fvc.com', 'g', ''),
+('phoebe@fvc.com', 'd', ''),
+('mojicalord111@gmail.com', 'p', ''),
+('rossgeller@fvc.com', 'd', ''),
+('rachellegreen@fvc.com', 'd', ''),
+('charlottediane11@gmail.com', 'p', ''),
+('clarisse@fvc.com', 's', ''),
+('troy@fvc.com', 'g', ''),
+('cey@fvc.com', 'g', ''),
+('kurt@fvc.com', 's', ''),
+('irene@fvc.com', 'g', ''),
+('123', 'i', '');
 
 --
 -- Indexes for dumped tables
@@ -341,6 +480,18 @@ ALTER TABLE `appointment`
   ADD PRIMARY KEY (`appoid`),
   ADD KEY `pid` (`pid`),
   ADD KEY `scheduleid` (`scheduleid`);
+
+--
+-- Indexes for table `breed`
+--
+ALTER TABLE `breed`
+  ADD PRIMARY KEY (`breedId`);
+
+--
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `category`
@@ -383,10 +534,28 @@ ALTER TABLE `inventory`
   ADD PRIMARY KEY (`invid`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `patient`
 --
 ALTER TABLE `patient`
   ADD PRIMARY KEY (`pid`);
+
+--
+-- Indexes for table `pet`
+--
+ALTER TABLE `pet`
+  ADD PRIMARY KEY (`petId`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`invid`);
 
 --
 -- Indexes for table `schedule`
@@ -400,6 +569,12 @@ ALTER TABLE `schedule`
 --
 ALTER TABLE `specialties`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `species`
+--
+ALTER TABLE `species`
+  ADD PRIMARY KEY (`speId`);
 
 --
 -- Indexes for table `staff`
@@ -421,7 +596,19 @@ ALTER TABLE `webuser`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `breed`
+--
+ALTER TABLE `breed`
+  MODIFY `breedId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -460,16 +647,40 @@ ALTER TABLE `inventory`
   MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
   MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `pet`
+--
+ALTER TABLE `pet`
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `species`
+--
+ALTER TABLE `species`
+  MODIFY `speId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `staff`

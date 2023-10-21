@@ -32,8 +32,13 @@ $lastSegment = end($segments);
                  </td>
              </tr>
              <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-home" >
+                        <a href="../index.php" class="non-style-link-menu"><div><p class="menu-text">Home</p></a></div></a>
+                    </td>
+                </tr>
+             <tr class="menu-row" >
                     <td class="menu-btn menu-icon-home <?php if ($lastSegment == 'index.php'){echo 'menu-icon-session-active';}?>" >
-                        <a href="../patient/index.php" class="non-style-link-menu <?php if ($lastSegment == 'index.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Home</p></a></div></a>
+                        <a href="../patient/index.php" class="non-style-link-menu <?php if ($lastSegment == 'index.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Dashboard</p></a></div></a>
                     </td>
                 </tr>
                 <tr class="menu-row">
@@ -71,6 +76,11 @@ $lastSegment = end($segments);
 				<tr class="menu-row" >
                     <td class="menu-btn menu-icon-appoinment <?php if ($lastSegment == 'gappointment.php'){echo 'menu-icon-session-active';}?>">
                         <a href="../patient/gappointment.php" class="non-style-link-menu <?php if ($lastSegment == 'gappointment.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">My Groomer Bookings</p></a></div>
+                    </td>
+                </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-schedule <?php if ($lastSegment == 'history.php'){echo 'menu-icon-session-active';}?>">
+                        <a href="../patient/history.php" class="non-style-link-menu <?php if ($lastSegment == 'history.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">History</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >

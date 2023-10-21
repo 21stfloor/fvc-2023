@@ -4,7 +4,7 @@ yung system po namin is working na pero need pa po kasi i-simplify kasi hindi ra
 
 - Automated SMS notif for booking appointments and for expired and critical inventory stocks
 
-—Provide booking history and detailed pet’s records to the client
+*Provide booking history and detailed pet’s records to the client
 
 * Landing page for website (index.php)
 

@@ -18,6 +18,9 @@
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
         }
+        .product-image{
+            max-width: 25%;
+        }
 </style>
 </head>
 <body>
@@ -132,6 +135,12 @@
                         <table width="93%" class="sub-table scrolldown" border="0">
                         <thead>
                         <tr>
+                            <th class="table-headin">
+                                    
+                                
+                                    Image
+                                    
+                                    </th>
                                 <th class="table-headin">
                                     
                                 
@@ -188,7 +197,11 @@
                                     $spcil_res= $database->query("select sname from category where id='$spe'");
                                     $spcil_array= $spcil_res->fetch_assoc();
                                     $spcil_name=$spcil_array["sname"];
+                                    $image = $row["image"];
                                     echo '<tr>
+                                    <td> &nbsp;'.
+                                        '<img src="'.$image.'" alt="No Image" class="product-image"/>'
+                                        .'</td>
                                         <td> &nbsp;'.
                                         substr($name,0,30)
                                         .'</td>
@@ -267,6 +280,7 @@
             $quantity=$row["invquantity"];
 			$description=$row["invdescription"];
 			$price=$row["invprice"];
+            $image=$row["image"];
             echo '
             <div id="popup1" class="overlay">
                     <div class="popup">
@@ -287,11 +301,19 @@
                             </tr>
                             
                             <tr>
+                                <td colspan="2">
+                                    <img src="'.$image.'" alt="No Image" class="product-image"/>
+                                </td>
+                                
+                            </tr>
+
+                            <tr>
                                 
                                 <td class="label-td" colspan="2">
                                     <label for="name" class="form-label">Name: </label>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <td class="label-td" colspan="2">
                                     '.$name.'<br><br>
@@ -559,6 +581,7 @@
             $spcil_array= $spcil_res->fetch_assoc();
             $spcil_name=$spcil_array["sname"];
             $quantity=$row["invquantity"];
+            $image=$row["image"];
 
             $error_1=$_GET["error"];
                 $errorlist= array(
@@ -580,6 +603,7 @@
                                 <div style="display: flex;justify-content: center;">
                                 <div class="abc">
                                 <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
+                                <form action="i-edit-inv.php" method="POST" class="add-new-form" enctype="multipart/form-data">
                                 <tr>
                                         <td class="label-td" colspan="2">'.
                                             $errorlist[$error_1]
@@ -591,9 +615,12 @@
                                         Inventory ID : '.$id.' (Auto Generated)<br><br>
                                         </td>
                                     </tr>
+
+                                    
+
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <form action="i-edit-inv.php" method="POST" class="add-new-form">
+                                            
                                             <label for="Code" class="form-label">Code: </label>
                                             <input type="hidden" value="'.$id.'" name="id00">
                                             <input type="hidden" name="oldcode" value="'.$code.'" >
@@ -604,6 +631,21 @@
                                         <input type="text" name="code" class="input-text" placeholder="Inventory Code" value="'.$code.'" required><br>
                                         </td>
                                     </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <img src="'.$image.'" alt="No Image" id="imagePreview" class="product-image"/>
+                                        </td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                        <input id="imageUpload" type="file" name="image"  placeholder="Inventory Image" /><br>
+                                        </td>
+                                        
+                                    </tr>
+
                                     <tr>
                                         
                                         <td class="label-td" colspan="2">
@@ -711,8 +753,9 @@
                         
                                     </tr>
                                 
-                                    </form>
+                                    
                                     </tr>
+                                    </form>
                                 </table>
                                 </div>
                                 </div>
@@ -752,5 +795,28 @@
 ?>
 </div>
 
+<script>
+        // Function to update the image preview
+        function updateImagePreview() {
+            const imageUpload = document.getElementById('imageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+
+            imageUpload.addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    };
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        // Call the function to set up the event listener
+        updateImagePreview();
+    </script>
 </body>
 </html>

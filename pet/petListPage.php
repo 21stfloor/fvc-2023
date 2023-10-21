@@ -38,12 +38,19 @@
         
     <title>FVC | My Pets</title>
 	<link rel="icon" type="image/x-icon" href="../img/icon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         .popup{
             animation: transitionIn-Y-bottom 0.5s;
         }
         .sub-table{
             animation: transitionIn-Y-bottom 0.5s;
+        }
+        .img-pet-list{
+            max-width: 25%;
+        }
+        .container{
+            max-width: 100% ;
         }
 </style>
 
@@ -118,7 +125,7 @@
                         echo "<td id='petBday'>" . $row['birthday'] . "</td>";
                         echo "<td>
                                 <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
-                                    <a href='editPetPage.php' id='$petId' type='button' class='btn btn-warning pet-edit'>Edit Pet</a>
+                                    <a href='editPetPage.php?id=".$petId."' type='button' class='btn btn-warning pet-edit'>Edit Pet</a>
                                     <button id='$petId' type='button' class='btn btn-danger pet-delete'>Delete</button>
                                 </div>
                             </td>";
@@ -142,7 +149,7 @@
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script> -->
 
-    <?php //include('../inc/scripts.php') ?>
+    <?php include('../inc/scripts.php') ?>
 </body>
 
 </html>

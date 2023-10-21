@@ -1,6 +1,7 @@
 
     <?php
-    
+    error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
     
     include("../connection.php");
 
@@ -18,11 +19,12 @@
         $password=$_POST['password'];
         $cpassword=$_POST['cpassword'];
         $id=$_POST['id00'];
-        
+        $image = '';
+        echo $id;
         if ($password==$cpassword){
             $error='3';
-            $result= $database->query("select inventory.invid from inventory inner join webuser on inventory.invcode=webuser.code where webuser.code='$code';");
-            if($result->num_rows==1){
+            $result= $database->query("select inventory.invid from inventory WHERE invcode='$code' AND invid!='$id'");
+            if($result->num_rows>=1){
                 $id2=$result->fetch_assoc()["invid"];
             }else{
                 $id2=$id;
@@ -34,7 +36,20 @@
                     
             }else{
 
-				$sql1="update inventory set invcode='$code',invname='$name',invpassword='$password',invquantity='$quan',invcategory='$spec', invdescription='$desc', invprice='$pric' where invid=$id ;";
+                if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
+                    $targetDirectory = "..\uploads\products\\" . $id . "\\";
+                    if (!file_exists(str_replace("\\", "/", $targetDirectory))) {
+                        mkdir(str_replace("\\", "/", $targetDirectory), 0777, true);
+                    }
+                    $targetFile = $targetDirectory . basename($_FILES['image']['name']);
+    
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+                        $image = str_replace('\\', '/', $targetFile);
+                        
+                    }
+                }
+
+				$sql1="update inventory set invcode='$code',invname='$name',invpassword='$password',invquantity='$quan',invcategory='$spec', invdescription='$desc', invprice='$pric', image='$image' where invid=$id ;";
 
 				$database->query($sql1);
                 

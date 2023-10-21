@@ -288,6 +288,7 @@ $(document).ready(function() {
 <script>
 const deletePet = $(".pet-delete");
 deletePet.on("click", function() {
+    console.log('delete')
     var id = $(this).attr('id');
     bootbox.confirm({
         message: 'Are you sure on deleting this pet?',

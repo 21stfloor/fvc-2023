@@ -132,14 +132,20 @@
                         <table width="93%" class="sub-table scrolldown" border="0">
                         <thead>
                         <tr>
+                            <th class="table-headin">
+                                    
+                                
+                                    Image
+                                    
+                                    </th>
                                 <th class="table-headin">
                                     
                                 
-                                Inventory Name
+                                Product Name
                                 
                                 </th>
                                 <th class="table-headin">
-                                    Inventory Code
+                                    Product Code
                                 </th>
                                 <th class="table-headin">
                                     
@@ -189,6 +195,9 @@
                                     $spcil_array= $spcil_res->fetch_assoc();
                                     $spcil_name=$spcil_array["sname"];
                                     echo '<tr>
+                                        <td> &nbsp;'.
+                                        'No Image'
+                                        .'</td>
                                         <td> &nbsp;'.
                                         substr($name,0,30)
                                         .'</td>
@@ -547,7 +556,7 @@
         ';
             }
         }elseif($action=='edit'){
-            $sqlmain= "select * from inventory where invid='$id'";
+            $sqlmain= "select * from products where invid='$id'";
             $result= $database->query($sqlmain);
             $row=$result->fetch_assoc();
             $name=$row["invname"];
@@ -559,6 +568,7 @@
             $spcil_array= $spcil_res->fetch_assoc();
             $spcil_name=$spcil_array["sname"];
             $quantity=$row["invquantity"];
+            $image=$row["image"];
 
             $error_1=$_GET["error"];
                 $errorlist= array(
@@ -610,9 +620,17 @@
                                             <label for="name" class="form-label">Name: </label>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="name" class="input-text" placeholder="Inventory Name" value="'.$name.'" required><br>
+                                            <input type="file" name="image" class="input-text" placeholder="Product Image" value="'.$image.'"><br>
+                                        </td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <input type="text" name="name" class="input-text" placeholder="Product Name" value="'.$name.'" required><br>
                                         </td>
                                         
                                     </tr>

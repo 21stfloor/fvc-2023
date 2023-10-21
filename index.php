@@ -24,19 +24,7 @@
         
 </head>
 <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-            <div class="container px-5">
-                <a class="navbar-brand" href="#page-top">FVC | Friendstars Veterinary Clinic</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="signup.php">Sign Up</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.php">Log In</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<?php include('navigation.php') ?>
         <!-- Header-->
         <header class="masthead text-center text-white">
             <div class="masthead-content">
