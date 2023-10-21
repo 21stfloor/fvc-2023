@@ -82,6 +82,11 @@ $lastSegment = end($segments);
                         <a href="patient.php" class="non-style-link-menu <?php if ($lastSegment == 'patient.php'){echo 'menu-icon-session-active';}?> "><div><p class="menu-text">Patients</p></a></div>
                     </td>
                 </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-dashbord <?php if ($lastSegment == 'orders.php'){echo 'menu-icon-session-active';}?>">
+                        <a href="orders.php" class="non-style-link-menu <?php if ($lastSegment == 'orders.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Orders</p></a></div>
+                    </td>
+                </tr>
 				<tr class="menu-row" >
                     <td class="menu-btn menu-icon-dashbord <?php if ($lastSegment == 'inventory.php'){echo 'menu-icon-session-active';}?>">
                         <a href="inventory.php" class="non-style-link-menu <?php if ($lastSegment == 'inventory.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Inventory</p></a></div>

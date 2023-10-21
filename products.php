@@ -214,9 +214,10 @@ $database->close();
 
         function updateTotalPrice(basePrice){
             let quantity = $('#quantity').val();
-            let total = `₱${basePrice * quantity}`;
-            $('#total-price').text(`Total Price: ${total}`);
-            $('input[name="price"]').val(total);
+            let totalPrice = `₱${basePrice * quantity}`;
+            // let total = 
+            $('#total-price').text(`Total Price: ${totalPrice}`);
+            // $('input[name="price"]').val(total);
         }
         
         $(document).ready(function(){
