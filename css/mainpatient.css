@@ -362,6 +362,17 @@ input[type=search]:focus {
   background-image: url('../img/icons/dashboard.svg');
 }
 
+.menu-icon-cart{
+  background-image: url('../img/icons/cart2.svg');
+}
+
+.menu-icon-shop{
+  background-image: url('../img/icons/shop.svg');
+}
+
+.menu-icon-order{
+  background-image: url('../img/icons/order.svg');
+}
 
 .menu-icon-doctor{
   background-image: url('../img/icons/doctors.svg');

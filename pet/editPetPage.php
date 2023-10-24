@@ -11,8 +11,8 @@
     } else {
         header("location: ../login.php");
     }
-    if (isset($_GET['id'])) {
-        $petId = $_GET['id'];
+        if (isset($_GET['id'])) {
+        $petId = $_GET['id'];    
         // Use the $petId as needed in your page logic
     }
 

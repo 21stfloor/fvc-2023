@@ -1,3 +1,5 @@
+
+
 <?php
 // Get the current URL
 $currentURL = "http" . (isset($_SERVER['HTTPS']) ? "s" : "") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -83,6 +85,30 @@ $lastSegment = end($segments);
                         <a href="../patient/history.php" class="non-style-link-menu <?php if ($lastSegment == 'history.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">History</p></a></div>
                     </td>
                 </tr>
+
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-cart <?php if ($lastSegment == 'cart.php'){echo 'menu-icon-session-active';}?>">                    
+                        <a href="../cart.php" class="non-style-link-menu <?php if ($lastSegment == 'cart.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Cart</p></div></a>
+                    </td>
+                </tr>
+
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-order <?php if ($lastSegment == 'orders.php'){echo 'menu-icon-session-active';}?>">                    
+                        <a href="../orders.php" class="non-style-link-menu <?php if ($lastSegment == 'orders.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Orders</p></div></a>
+                    </td>
+                </tr>
+
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-shop <?php if ($lastSegment == 'products.php'){echo 'menu-icon-session-active';}?>">                    
+                        <a href="../products.php" class="non-style-link-menu <?php if ($lastSegment == 'products.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Products</p></div></a>
+                    </td>
+                </tr>
+
+                
+
+                <!-- <li class="nav-item"><a class="nav-link" href="cart.php"><i class="bi bi-cart3"></i> Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="orders.php"> Orders</a></li>
+                <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li> -->
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-settings <?php if ($lastSegment == 'settings.php'){echo 'menu-icon-session-active';}?>">
                         <a href="../patient/settings.php" class="non-style-link-menu <?php if ($lastSegment == 'settings.php'){echo 'non-style-link-menu-active';}?>"><div><p class="menu-text">Settings</p></a></div>

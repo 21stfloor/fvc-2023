@@ -362,7 +362,9 @@ input[type=search]:focus {
   background-image: url('../img/icons/dashboard.svg');
 }
 
-
+.menu-icon-cart{
+  background-image: url('../img/icons/cart2.svg');
+}
 .menu-icon-doctor{
   background-image: url('../img/icons/doctors.svg');
 }
@@ -390,9 +392,9 @@ input[type=search]:focus {
   background-image: url('../img/icons/store.svg');
 }
 
-.menu-icon-cart{
+/* .menu-icon-cart{
   background-image: url('../img/icons/cart.svg');
-}
+} */
 
 
 .menu-icon-dashbord:hover,.menu-icon-dashbord-active{

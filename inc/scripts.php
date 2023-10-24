@@ -272,17 +272,17 @@ function goBack() {
 }
 </script>
 <script>
-$(document).ready(function() {
-    // Attach click event handler to the links with class "pet-edit"
-    $(".pet-edit").on("click", function(event) {
-        // Prevent the default link behavior (navigation)
-        event.preventDefault();
-        // Get the id of the clicked link
-        var clickedId = $(this).attr("id");
-        // Redirect to editPetPage.php with the id as a URL parameter
-        window.location.href = "editPetPage.php?id=" + clickedId;
-    });
-});
+// $(document).ready(function() {
+//     // Attach click event handler to the links with class "pet-edit"
+//     $(".pet-edit").on("click", function(event) {
+//         // Prevent the default link behavior (navigation)
+//         event.preventDefault();
+//         // Get the id of the clicked link
+//         var clickedId = $(this).attr("id");
+//         // Redirect to editPetPage.php with the id as a URL parameter
+//         window.location.href = "editPetPage.php?id=" + clickedId;
+//     });
+// });
 </script>
 
 <script>
