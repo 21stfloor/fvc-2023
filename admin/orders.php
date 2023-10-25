@@ -61,7 +61,7 @@
     $stmt->execute();
     $result = $stmt->get_result();
     ?>
-
+    
     <div class="container">
         <div class="menu">
         <?php include('../inc/adminSidebar.php') ?>
@@ -131,6 +131,10 @@
             $discount = $row["discount"];
             $payment_method = $row["payment_method"];
 
+            $stmt = $database->query("SELECT status FROM orders WHERE id='$orderID'");
+            $stmt = $stmt->fetch_assoc();
+            $status = $stmt['status'];
+
             echo '<tr>
                 <td style="text-align:center;">' . $orderID . '</td>
                 <td style="text-align:center;">' . $productName . '</td>
@@ -139,15 +143,13 @@
                 <td style="text-align:center;">₱' . $discount . '</td>
                 <td style="text-align:center;">' . $payment_method . '</td>
                 <td style="text-align:center;">
-                <select id="' . $orderID . '" class="status-select" name="status" aria-label="Default select example">';
+                <select id="' . $orderID . '" class="status-select" name="status" aria-label="Default select example" data-status="'.$status.'">';
                     $option1 = "";
                     $option2 = "";
                     $option3 = "";
                     $option4 = "";
                     $option5 = "";
-                    $stmt = $database->query("SELECT status FROM orders WHERE id='$orderID'");
-                    $stmt = $stmt->fetch_assoc();
-                    $status = $stmt['status'];
+                    
                     if ($status == "Pending") {
                         $option1 = "selected ";
                     } else if ($status == "Processing") {
@@ -311,7 +313,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 $('#orderTable').on('change', '.status-select', function(event) {
-    console.log(event.currentTarget.id);
+    var elemId = event.currentTarget.id;
+    console.log(elemId);
     console.log(event.currentTarget.value);
     var orderId = event.currentTarget.id;
 
@@ -329,9 +332,13 @@ $('#orderTable').on('change', '.status-select', function(event) {
             if (response === 'success') {
                 // Status updated successfully
                 alert('Order Status updated successfully');
+                $(`#${elemId}`).data('status', statusValue);
             } else {
                 // Handle any errors or display an error message
-                alert('Error updating status');
+                let previousStatus = $(`#${elemId}`).data('status');
+                $(`#${elemId}`).val(previousStatus);
+                console.log(`previous status was : ${previousStatus}` );
+                alert(response);
             }
         }
     });

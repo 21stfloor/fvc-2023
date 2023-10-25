@@ -23,13 +23,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             if ($orderRow = $orderResult->fetch_assoc()) {
                 $productId = $orderRow['product'];
-                $quantity = $orderRow['quantity'];
+                $deductedQuantity = $quantity - $orderRow['quantity'];
                 $ptel = $orderRow['ptel'];
+
+                if($deductedQuantity < 0){
+
+                    return 'not enough stock';
+                }
         
                 // Deduct the quantity from the inventory
-                $deductSql = "UPDATE inventory SET invquantity = invquantity - ? WHERE invid = ?";
+                $deductSql = "UPDATE inventory SET invquantity = ? WHERE invid = ?";
                 $stmt = $database->prepare($deductSql);
-                $stmt->bind_param('ii', $quantity, $productId);
+                $stmt->bind_param('ii', $deductedQuantity, $productId);
                 if ($stmt->execute()) {
                     // Inventory deducted successfully
         
@@ -42,14 +47,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                     if ($inventoryRow = $inventoryResult->fetch_assoc()) {
                         $invquantity = $inventoryRow['invquantity'];
-                        if ($invquantity <= 10) {
-                            // Send an SMS notification
-                            $message = "Inventory for product ID: $productId is critical.";
-                            include("sms_critical_inventory.php");
+                        try {
+                            if ($invquantity <= 10) {
+                                // Send an SMS notification
+                                $message = "Inventory for product ID: $productId is critical.";
+                                include("sms_critical_inventory.php");
+                            }
+                        } catch (Twilio\Exceptions\RestException $e) {
+                            // Handle the Twilio RestException here
+                            // echo "Twilio RestException: " . $e->getMessage();
+                            return 'success';
                         }
                     }
-                    return true;
+                    return 'success';
                 }
+
+                return 'error updating the stock';
             }
         }
          else if (($newStatus === 'Pending' || $newStatus === 'Processing') && $previousStatus === 'Shipped') {
@@ -62,22 +75,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($orderRow = $orderResult->fetch_assoc()) {
                 $productId = $orderRow['product'];
-                $quantity = $orderRow['quantity'] + (int)($quantity/2);
+                $returnedQuantity = $orderRow['quantity'] + $quantity;
 
                 // Return the quantity to the inventory
-                $returnSql = "UPDATE inventory SET invquantity = invquantity + ? WHERE invid = ?";
+                $returnSql = "UPDATE inventory SET invquantity = ? WHERE invid = ?";
                 $stmt = $database->prepare($returnSql);
-                $stmt->bind_param('ii', $quantity, $productId);
+                $stmt->bind_param('ii', $returnedQuantity, $productId);
                 if ($stmt->execute()) {
                     // Inventory updated successfully
-                    return true;
+                    return 'success';
                 }
+
+                return 'error updating the stock';
             }
         }
-        return false;
+        return 'error updating the stock';
     }
     // Retrieve the previous status using a SELECT statement
-    $prevStatusSql = "SELECT status, quantity FROM orders WHERE id = ?";
+    $prevStatusSql = "SELECT status, quantity, product FROM orders WHERE id = ?";
     $stmt = $database->prepare($prevStatusSql);
     $stmt->bind_param('i', $orderId);
     $stmt->execute();
@@ -87,7 +102,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($prevStatusRow = $prevStatusResult->fetch_assoc()) {
         $previousStatus = $prevStatusRow['status'];
-        $quantity = $prevStatusRow['quantity'];
+
+        $inventorySql = "SELECT invquantity FROM inventory WHERE invid = ?";
+        $stmt = $database->prepare($inventorySql);
+        $stmt->bind_param('i', $prevStatusRow['product']);
+        $stmt->execute();
+        $inventoryResult = $stmt->get_result();
+        if($inventoryRow = $inventoryResult->fetch_assoc()){
+            $quantity = $inventoryRow['invquantity'];
+        }
     }
 
     // Update the status in the database
@@ -95,11 +118,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $database->prepare($updateSql);
     $stmt->bind_param('si', $newStatus, $orderId);
 
-    if ($stmt->execute() && updateInventory($orderId, $newStatus, $previousStatus, $database, $quantity)) {
-        // Status and inventory updated successfully
-        echo 'success';
+    $updateResult = updateInventory($orderId, $newStatus, $previousStatus, $database, $quantity);
+    if ($updateResult == 'success') {
+        if($stmt->execute()){
+            echo 'success';
+        }
     } else {
-        // Error updating status or inventory
-        echo 'error';
+        echo $updateResult;
     }
 }
